@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>任天堂e-Shop比價神器</title>
+    <link rel="icon" href="./img/logo.png" type="image/x-icon">
+    <script src="./jquery-1.11.0.min.js"></script>
+<script>
+	$().ready(function(){
+		var dt=(+new Date())
+			$.ajax({
+            type: "get",
+            url: "./nintendo.php?history="+dt+"&ask_type="+window.location.hostname,
+            dataType: "json",
+            jsonp: "mycallback",
+            jsonpCallback: 'date',
+            success: function (res) {
+                    // console.log(res)
+                    var count = 0;
+                    for(i=0;i<res.length;i++){
+                    	if(res[i].title != ''){
+	                    	if((count % 2)==0){
+	                    		var li='<li class="order-table s1">'
+	                    	}else{
+								var li='<li class="order-table s2">'
+	                    	}
+								li+='<div class="title">' + res[i].title +'</div>'
+								li+='<hr id="line_2"/>'
+								li+='<div class="detail">相差(differ)<a class="differ">'+ res[i].differ + ' USD</a></div>'
+							if((count % 2)==0){
+	                    		li+='<div class="max_price_1">最高價格  <a class="line_v">|</a>'+ res[i].max_loc + '  <a class="price">'+ res[i].max_price +'USD</a></div>'
+	                    	}else{
+								li+='<div class="max_price_2">最高價格  <a class="line_v">|</a>'+ res[i].max_loc + '  <a class="price">'+ res[i].max_price +'USD</a></div>'
+	                    	}
+								
+								li+='<div class="min_price">最低價格  <a class="line_v">|</a>'+ res[i].min_loc + ' <a class="price">'+ res[i].min_price +' USD</a></div>'
+								
+								li+='</li>'
+			
+								$li=$(li)//轉為jquery格式
+			
+								$(".inside>ul").append(li)
+			
+							}
+		
+						count++;
+						}
+						// $(this).find(".total").text(count)
+						// $(".total").text(count);
+						filter_init();
+						var element=document.getElementById("total");
+						element.innerHTML=count;
+						// document.getElementsByClassName(".total").innerHTML=count;
+						// console.log(count)
+            },
+            error: function (XHR, textStatus, errorThrown) {
+
+                    console.log("error: " + textStatus);
+                    console.log("error: " + errorThrown);
+                		}
+                	});
+			})
+	function filter_init(){
+		// console.log("filter_init ");
+		// 建立 LightTableFilter
+  		var LightTableFilter = (function(Arr) {
+    	var _input;
+
+    	// 資料輸入事件處理函數
+    	function _onInputEvent(e) {
+      		_input = e.target;
+      		var li = document.getElementsByClassName(_input.getAttribute('data-table'));
+      		Arr.forEach.call(li, _filter);
+    	}
+
+    	// 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+    	function _filter(row) {
+      		var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+      		row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    	}
+
+    	return {
+      	// 初始化函數
+      	init: function() {
+        	var inputs = document.getElementsByClassName('light-table-filter');
+        	Arr.forEach.call(inputs, function(input) {
+          	input.oninput = _onInputEvent;
+        	});
+      			}
+    		};
+  		})(Array.prototype);
+  			// 網頁載入完成後，啟動 LightTableFilter
+  			// document.addEventListener('readystatechange', function() {
+  			//   if (document.readyState === 'complete') {
+  			//     LightTableFilter.init();
+  			//   }
+  			// });
+  		LightTableFilter.init();
+  	}
+</script>
+
+<style type="text/css">
+	#_body{
+		background-color: #35273c;;
+        /*background-image: url(./img/BG.png);*/
+        background-size: cover;
+        background-repeat:no-repeat;
+        margin: 0 auto;
+        font: 12px 'Microsoft Yahei','Microsoft JhengHei',tahoma,Srial,helvetica,sans-serif;
+	}
+	#container{
+		width:100%;
+		height:100%;
+	}
+	.inside{
+		width: 1000px;
+		position: relative;
+		margin: auto;
+	}
+	.title{
+		width: 80%;
+		font-size: 18px;
+		font-weight:bold;
+		display: inline-block;
+		color:#eff4eb;
+		text-align:center;
+		margin-top: 60px;
+    	margin-bottom: 20px;
+    	margin-left: 30px;
+	}
+	.differ{
+		font-size: 22px;
+		color:#eff4eb;
+	}
+	.detail{
+		width: 100%;
+		font-size: 14px;
+		color:#eff4eb;
+		display: inline-block;
+		text-align:center;
+	}
+	.max_price_1{
+		width: 69%;
+		font-size: 14px;
+		color:#eff4eb;
+		display: inline-block;
+		background-color: #0c726f;
+		padding: 4px;
+		border-radius:10px;
+		text-align:center;
+		transform: translateX(20%);
+		margin-top: 30px;
+	}
+	.max_price_2{
+		width: 69%;
+		font-size: 14px;
+		color:#eff4eb;
+		display: inline-block;
+		background-color: #2f3f8a;
+		padding: 4px;
+		border-radius:10px;
+		text-align:center;
+		transform: translateX(20%);
+		margin-top: 30px;
+	}
+	.min_price{
+		width: 69%;
+		font-size: 14px;
+		color:#eff4eb;
+		display: inline-block;
+		background-color: #e73843;
+		padding: 4px;
+		border-radius:10px;
+		text-align:center;
+		transform: translateX(20%);
+		margin-top: 10px;
+	}
+	.price{
+		border:6px #ccc solid;border-radius:10px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	.line_v{
+		font-size: 2px;
+		opacity: 0.4;
+	}
+	.inside>ul{
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.inside>ul>li{
+		width: 300px;
+		height: 300px;
+		/*border: 1px solid #ccc;*/
+		float: left;
+		margin-left: 10px;
+		margin-bottom: 10px;
+	}
+	.menu{
+		width: 100%;
+        height: 100%;
+        margin-bottom: 50px;
+	}
+	.menu>img{
+		display:block; 
+		margin:auto;
+		padding: 20px;
+	}
+	.menu_title{
+		font-size: 24px;
+		color:#eff4eb;
+		display: block;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	#search{
+		width:200px;
+		height:25px;
+		display: block;
+    	margin: auto;
+    	letter-spacing: 1px;
+		border-radius:10px;
+		text-align: center;
+	}
+	.s1{
+		background-image: url(./img/green.png);
+		background-size: cover;
+        background-repeat:no-repeat;
+        margin: 0 auto;
+	}
+	.s2{
+		background-image: url(./img/blue.png);
+		background-size: cover;
+        background-repeat:no-repeat;
+        margin: 0 auto;
+	}
+	.menu_search{
+		width: 30%;
+		height:100%;
+		background-color: #4c2e40;
+		border-radius:10px;
+		padding: 15px;
+		display: block;
+    	margin: auto;
+	}
+	#line{
+		opacity: 0.5;
+	}
+	#line_2{
+		width: 80%;
+		opacity: 0.5;
+	}
+	.total_1{
+		font-size: 20px;
+		color:#eff4eb;
+	}
+	.total_2{
+		font-size: 20px;
+		color:#eff4eb;
+		float: right;
+	}
+	.ref{
+		font-size: 24px;
+		color:#eff4eb;
+		float: center;
+	}
+</style>
+</head>
+<body id="_body">
+<div id="container">
+
+
+	<div class="menu">
+        <img src="./img/icon.png">  
+        <a class="menu_title">Nintendo e-Shop</a>
+        <div class="menu_search">
+        	<input id="search" class="light-table-filter" data-table="order-table" placeholder="搜尋(search)">
+          	<hr id="line"/>
+          	<a class="total_1">現在のゲーム数: <a class="total_2" id="total">集計中です..</a></a>
+    	</div>
+         
+    </div>
+    <div class="inside" >
+	
+		<ul>
+		<!--在這裡測試式決確定了以後搬到JS-->
+			<!--<li>
+			
+				<div class="title">test</div>
+				<div class="detail">test</div>
+			
+			</li>
+			-->
+		
+		</ul>
+
+<!-- 		<hr >
+  <a class="ref" href="https://eshop-prices.com/prices?currency=USD" target="eshop-prices" title="eshop-prices">Reference from eshop-prices</a> -->
+	</div>
+</div>
+</body>
+</html>
