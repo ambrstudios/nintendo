@@ -1,7 +1,7 @@
 <?php
 
 	//白名單設定
-	$data_array = array("lifunny.me","test.scott01.com","qn5566.github.io");
+	$data_array = array("lifunny.me","test.scott01.com","qn5566.github.io","test.nintendo.com");
 
 
 	if(isset($_GET['ask_type']) && !empty($_GET['ask_type'])){
