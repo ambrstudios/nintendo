@@ -10,7 +10,7 @@
 		var dt=(+new Date())
 			$.ajax({
             type: "get",
-            url: "./nintendo.php?history="+dt+"&ask_type="+window.location.hostname,
+            url: "./data/shop_data.txt",
             dataType: "json",
             jsonp: "mycallback",
             jsonpCallback: 'date',
