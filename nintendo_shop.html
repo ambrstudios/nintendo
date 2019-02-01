@@ -33,7 +33,7 @@
 								li+='<div class="max_price_2">最高價格  <a class="line_v">|</a>'+ res[i].max_loc + '  <a class="price">'+ res[i].max_price +'USD</a></div>'
 	                    	}
 								
-								li+='<div class="min_price">最低價格  <a class="line_v">|</a>'+ res[i].min_loc + ' <a class="price">'+ res[i].min_price +' USD</a></div>'
+								li+='<div class="min_price">最低價格  <a class="line_v">|</a>'+ res[i].min_loc + '<br> <a class="price">'+ res[i].min_price +' USD</a></div>'
 								
 								li+='</li>'
 			
@@ -50,6 +50,9 @@
 						filter_init();
 						var element=document.getElementById("total");
 						element.innerHTML=count;
+						// var li='<br><div class="loc_icon"/>';
+						// $li=$(li)
+						// $(".inside>ul").append(li)
 						// document.getElementsByClassName(".total").innerHTML=count;
 						// console.log(count)
             },
@@ -103,10 +106,11 @@
 	#_body{
 		background-color: #35273c;;
         /*background-image: url(./img/BG.png);*/
-        width: 1210px;
-        background-size: cover;
-        background-repeat:no-repeat;
+        /*width: 1210px;*/
+        /*background-size: cover;
+        background-repeat:no-repeat;*/
         margin: 0 auto;
+        display: block;
         font: 12px 'Microsoft Yahei','Microsoft JhengHei',tahoma,Srial,helvetica,sans-serif;
 	}
 	#container{
@@ -151,7 +155,7 @@
 		border-radius:10px;
 		text-align:center;
 		transform: translateX(16%);
-		margin-top: 45px;
+		margin-top: 30px;
 	}
 	.max_price_2{
 		width: 69%;
@@ -163,11 +167,11 @@
 		border-radius:10px;
 		text-align:center;
 		transform: translateX(16%);
-		margin-top: 45px;
+		margin-top: 30px;
 	}
 	.min_price{
 		width: 69%;
-		font-size: 14px;
+		font-size: 24px;
 		color:#eff4eb;
 		display: inline-block;
 		background-color: #e73843;
@@ -217,7 +221,7 @@
 		margin-bottom: 10px;
 	}
 	#search{
-		width:200px;
+		/*width:200px;*/
 		height:25px;
 		display: block;
     	margin: auto;
@@ -240,7 +244,7 @@
 	.menu_search{
 		width: 30%;
 		height:100%;
-		background-color: #4c2e40;
+		background-color: #eb414d;
 		border-radius:10px;
 		padding: 15px;
 		display: block;
@@ -267,6 +271,80 @@
 		color:#eff4eb;
 		float: center;
 	}
+	.loc_icon{
+		width:1043px;
+        height:244px;
+
+        margin-top: 15px;
+		background-image: url(./img/pic.png);
+		background-size: cover;
+        background-repeat:no-repeat;
+        margin: 0 auto;
+	}
+
+	#footer {
+		height: 100px;
+		position: relative;
+		margin-top: -100px;
+}
+
+    @media screen and (max-width: 1080px){
+    .menu_search{
+		width: 60%;
+		height:100%;
+		background-color: #eb414d;
+		border-radius:10px;
+		padding: 15px;
+		display: block;
+    	margin: auto;
+	}
+	#search{
+		font-size: 60px;
+		/*width:200px;*/
+		height:80px;
+		display: block;
+    	margin: auto;
+    	/*letter-spacing: 1px;*/
+		border-radius:10px;
+		text-align: center;
+	}
+	.title{
+		width: 80%;
+		font-size: 30px;
+		font-weight:bold;
+		display: inline-block;
+		color:#eff4eb;
+		text-align:center;
+		margin-top: 60px;
+    	margin-bottom: 20px;
+    	margin-left: 30px;
+	}
+    .loc_icon{
+        width:404px;
+        height:1128px;
+		background-image: url(./img/phone.png);
+		background-size: cover;
+        background-repeat:no-repeat;
+        margin: 0 auto;
+	}
+	.inside{
+		width: 980px;;
+		position: relative;
+		margin: auto;
+	}
+	.inside>ul>li{
+		width: 393px;
+    	height: 427px;
+		/*border: 1px solid #ccc;*/
+		float: left;
+		margin-left: 60px;
+		margin-bottom: 10px;
+	}
+
+
+    }
+
+
 </style>
 </head>
 <body id="_body">
@@ -281,7 +359,7 @@
           	<hr id="line"/>
           	<a class="total_1">現在のゲーム数: <a class="total_2" id="total">集計中です..</a></a>
     	</div>
-          <img src="./img/pic.png">  
+    	<br><div class="loc_icon"/>
     </div>
     <div class="inside" >
 	
@@ -300,6 +378,10 @@
 <!-- 		<hr >
   <a class="ref" href="https://eshop-prices.com/prices?currency=USD" target="eshop-prices" title="eshop-prices">Reference from eshop-prices</a> -->
 	</div>
+	
 </div>
 </body>
+<footer id="footer">
+	<!-- <br><div class="loc_icon"/> -->
+</footer>
 </html>
