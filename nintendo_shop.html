@@ -22,7 +22,19 @@
      });
 </script>
 
+<script type="text/javascript">
+//- Using a function pointer:
+// document.getElementById("clickMe").onclick = doFunction;
+
+//- Using an anonymous function:
+// document.getElementById("clickMe").onclick = function () { alert('hello!'); };
+
+</script>
+
+
 <script>
+
+	// var All_Arr;
 	$().ready(function(){
 		var dt=(+new Date())
 			$.ajax({
@@ -35,7 +47,13 @@
                     // console.log(res)
                     var count = 0;
                     for(i=0;i<res.length;i++){
-                    	if(res[i].title != ''){
+                    	var text1 = res[i].title;
+                    	
+                    	let str = text1.trim();
+
+                    	// console.log("str.length : " + str.length);
+
+                    	if(str.length != 0){
 	                    	if((count % 2)==0){
 	                    		var li='<li class="order-table s1">'
 	                    	}else{
@@ -60,11 +78,16 @@
 			
 							}
 		
-						count++;
+							count++;
 						}
 						// $(this).find(".total").text(count)
 						// $(".total").text(count);
-						filter_init();
+						// if(null != document.getElementById('name')){
+							// console.log("document.getElementById('name'): " + document.getElementById('name'));
+							// filter_init();
+						search_init();
+						// }
+						
 						var element=document.getElementById("total");
 						element.innerHTML=count;
 						// var li='<br><div class="loc_icon"/>';
@@ -80,17 +103,39 @@
                 		}
                 	});
 			})
+
+			function search_init(){
+				$("#clickMe").click(function(){
+			
+					keyword=$("#game_name").val()
+					var $li=$(".inside>ul>li")
+					var leg=($li.length)
+					$li.each(function(i) {
+					txt1=$(this).find(".title").text()
+					// txt2=$(this).find(".detail").text()
+					// if(txt1.indexOf(keyword)!=-1 || txt2.indexOf(keyword)!=-1){
+					if(txt1.indexOf(keyword)!=-1 ){
+						$(this).show()
+					}else{
+						$(this).hide()
+					}
+			
+			});	
+		})
+	}
+
 	function filter_init(){
 		// console.log("filter_init ");
 		// 建立 LightTableFilter
   		var LightTableFilter = (function(Arr) {
     	var _input;
 
+		// All_Arr = Arr;
     	// 資料輸入事件處理函數
     	function _onInputEvent(e) {
       		_input = e.target;
       		var li = document.getElementsByClassName(_input.getAttribute('data-table'));
-      		Arr.forEach.call(li, _filter);
+      		// Arr.forEach.call(li, _filter);
     	}
 
     	// 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
@@ -117,6 +162,7 @@
   			// });
   		LightTableFilter.init();
   	}
+
 </script>
 
 <style type="text/css">
@@ -238,10 +284,19 @@
 		margin-bottom: 10px;
 	}
 	.search{
+		width:80%;
+		height:25px;
+		/*display: block;*/
+    	margin: auto;
+    	letter-spacing: 1px;
+		border-radius:10px;
+		text-align: center;
+	}
+	.subm{
 		/*width:200px;*/
 		height:25px;
-		display: block;
-    	margin: auto;
+		/*display: block;*/
+    	margin-top: 5px;
     	letter-spacing: 1px;
 		border-radius:10px;
 		text-align: center;
@@ -307,7 +362,7 @@
 
     @media screen and (max-width: 1080px){
     .menu_search{
-		width: 90%;
+		width: 75%;
 		height:100%;
 		background-color: #eb414d;
 		border-radius:10px;
@@ -316,14 +371,29 @@
     	margin: auto;
 	}
 	.search{
-		font-size: 60px;
-		width:700px;
-		height:200px;
+		font-size: 22px;
+		width:500px;
+		height:80px;
+		margin-bottom: 5px;
 		display: block;
-    	margin: auto;
+    	/*letter-spacing: 1px;*/
+		border-radius:10px;
+	}
+	.subm{
+		font-size: 20px;
+		/*width:700px;*/
+		height:50px;
+		display: block;
+        margin : 0 auto;
+
+    	/*margin-top: 5px;*/
     	/*letter-spacing: 1px;*/
 		border-radius:10px;
 		text-align: center;
+
+		text-align: center;
+		background-color: #ffffff;
+		border:3px orange double;
 	}
 	.title{
 		width: 80%;
@@ -372,7 +442,10 @@
         <img src="./img/icon.png">  
         <a class="menu_title">Nintendo e-Shop</a>
         <div class="menu_search">
-        	<input class="light-table-filter search" data-table="order-table" placeholder="搜尋(search)" >
+        
+        	<input class="light-table-filter search" data-table="order-table" placeholder="搜尋(search)" type="text" name="game_name" id="game_name" >
+        	<input class="subm" type="button" id="clickMe" value="確認">
+        
           	<hr id="line"/>
           	<a class="total_1">現在のゲーム数: <a class="total_2" id="total">集計中です..</a></a>
     	</div>

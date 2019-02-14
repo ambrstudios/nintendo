@@ -1,37 +1,37 @@
 <?php
 
 	//白名單設定
-	$data_array = array("lifunny.me","test.scott01.com","qn5566.github.io","test.nintendo.com");
+	// $data_array = array("lifunny.me","test.scott01.com","qn5566.github.io","test.nintendo.com");
 
 
-	if(isset($_GET['ask_type']) && !empty($_GET['ask_type'])){
+	// if(isset($_GET['ask_type']) && !empty($_GET['ask_type'])){
+	// 	    // $ask_type = $_GET['ask_type'];
 		    // $ask_type = $_GET['ask_type'];
-		    $ask_type = $_GET['ask_type'];
 
 		    
 
-		    for($i=0;$i<count($data_array);$i++){
-		        if($ask_type == $data_array[$i]){
-		            $action = "poxy.php";
-		        }
+		    // for($i=0;$i<count($data_array);$i++){
+		    //     if($ask_type == $data_array[$i]){
+		    //         $action = "poxy.php";
+		    //     }
 
-		        // array_push($debug, array($i,$data_array[$i]));
-		    }
-		    if(is_null($action)){
-		        header("location:http://lifunny.me/");
-		        return;
-		    }
+		    //     // array_push($debug, array($i,$data_array[$i]));
+		    // }
+		    // if(is_null($action)){
+		    //     header("location:http://lifunny.me/");
+		    //     return;
+		    // }
 
     
 
 		//開始判別
 		$dir = './data/shop_data.txt';
-	 	$data = file_get_contents($dir);
-	    if($data){
+	 // 	$data = file_get_contents($dir);
+	 //    if($data){
 
-			echo $data;
-	    	return;
-	    }
+		// 	echo $data;
+	 //    	return;
+	 //    }
 
 
  		$ch=curl_init();
@@ -41,7 +41,11 @@
         curl_setopt( $ch, CURLOPT_USERAGENT , 'Mozilla/5.0 (Windows; U; Windows NT 5.1; )');
         $contents=curl_exec($ch );
         $contents = mb_convert_encoding($contents, 'utf-8', 'GBK, UTF-8, ASCII');
-		$first_pattern = '/<table data-search-table="">[\w\s\d\W]*<\/table>/';
+
+        // echo $contents;
+		// file_put_contents('./data/raw.txt', $contents);
+
+		$first_pattern = '/<table data-search-table=true>[\w\s\d\W]*<\/table>/';
         preg_match_all($first_pattern,$contents,$first_content);
 
 
@@ -56,7 +60,8 @@
         } else {
             // return self::failed(32, '取内容异常：'. '$contents:'.$first_content[0]);
         }
-
+		
+		// echo $first_content[0][0];
 
 		$title = Array();
 		$data = Array();
@@ -106,11 +111,11 @@
 		file_put_contents($dir, json_encode($data));
         echo json_encode($data);
 
-		}else{
+		// }else{
 		    // echo var_dump($debug,true);
-		        header("location:http://lifunny.me/");
-		        die;
-		}
+		//         header("location:http://lifunny.me/");
+		//         die;
+		// }
 
 		
 
