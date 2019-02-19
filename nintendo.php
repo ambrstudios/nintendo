@@ -96,12 +96,12 @@
 				// echo '遊戲名稱:'.$tds_1->item(0)->nodeValue .', 最貴:'.$title[array_search((max($cost_total)),$cost_total) + 1 ] .' '.MAX($cost_total). ',  最便宜:'.$title[array_search((min(array_filter($cost_total))),$cost_total) + 1 ] .' '.min(array_filter($cost_total)).'相差: $'.(MAX($cost_total)-min(array_filter($cost_total)))."<br>";
 
 
-				$data_t['title'] = $tds_1->item(0)->nodeValue;
-				$data_t['max_loc'] = $title[array_search((max($cost_total)),$cost_total) + 1 ];
-				$data_t['max_price'] = MAX($cost_total);
-				$data_t['min_loc'] = $title[array_search((min(array_filter($cost_total))),$cost_total) + 1 ];
-				$data_t['min_price'] = min(array_filter($cost_total));
-				$data_t['differ'] = MAX($cost_total)-min(array_filter($cost_total));
+				$data_t['title'] = trim($tds_1->item(0)->nodeValue);
+				$data_t['max_loc'] = trim($title[array_search((max($cost_total)),$cost_total) + 1 ]);
+				$data_t['max_price'] = trim(MAX($cost_total));
+				$data_t['min_loc'] = trim($title[array_search((min(array_filter($cost_total))),$cost_total) + 1 ]);
+				$data_t['min_price'] = trim(min(array_filter($cost_total)));
+				$data_t['differ'] = trim(MAX($cost_total)-min(array_filter($cost_total)));
 
 				array_push($data,$data_t);
             }
